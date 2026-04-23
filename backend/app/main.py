@@ -68,6 +68,29 @@ app = FastAPI(
     version="1.3.0"
 )
 
+@app.get("/health")
+def health_check(db: Session = Depends(get_db)):
+    """Diagnostic endpoint to verify DB connectivity and schema state."""
+    try:
+        # Check if we can talk to the DB
+        db.execute(text("SELECT 1"))
+        
+        # Check if tables exist
+        tables = db.execute(text("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'")).fetchall()
+        
+        return {
+            "status": "online",
+            "database": "connected",
+            "tables_found": [t[0] for t in tables],
+            "message": "System is healthy"
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "database": "disconnected",
+            "error_detail": str(e)
+        }
+
 @app.on_event("startup")
 def startup_event():
     """Executes automatic seeding on startup to ensure production data integrity."""
