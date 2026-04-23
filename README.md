@@ -8,6 +8,13 @@ This repository contains a high-fidelity prototype of the Genlogs truck tracking
 
 ---
 
+## 🌐 Live Production Demo
+
+*   **Production Portal (Vercel):** [https://carrier-route-ranking-mvp.vercel.app/](https://carrier-route-ranking-mvp.vercel.app/)
+*   **Infrastructure Note:** The high-performance API and PostgreSQL database are hosted on **Render**, secured via a shared secret authentication layer.
+
+---
+
 ## 🚀 Quick Start (Docker Zero-Config)
 
 The easiest way to run the full stack (Database, Backend, and Frontend) with automated seeding is using Docker Compose:
