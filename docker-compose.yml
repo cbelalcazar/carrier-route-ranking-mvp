@@ -5,9 +5,10 @@ services:
     image: postgres:15-alpine
     container_name: genlogs_db
     environment:
-      POSTGRES_DB: genlogs
-      POSTGRES_USER: genlogs_user
-      POSTGRES_PASSWORD: genlogs_pass
+      # Staff Tip: Use default values to maintain Zero-Config while allowing overrides
+      POSTGRES_DB: ${DB_NAME:-genlogs}
+      POSTGRES_USER: ${DB_USER:-genlogs_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-genlogs_pass}
     ports:
       - "5432:5432"
     volumes:
@@ -17,7 +18,8 @@ services:
     build: ./backend
     container_name: genlogs_backend
     environment:
-      DATABASE_URL: postgresql://genlogs_user:genlogs_pass@db:5432/genlogs
+      # Derived from the variables above to ensure consistency
+      DATABASE_URL: postgresql://${DB_USER:-genlogs_user}:${DB_PASSWORD:-genlogs_pass}@db:5432/${DB_NAME:-genlogs}
     ports:
       - "8000:8000"
     depends_on:
@@ -27,7 +29,7 @@ services:
     build: ./frontend
     container_name: genlogs_frontend
     environment:
-      VITE_API_URL: http://localhost:8000
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
     ports:
       - "5173:5173"
     volumes:
