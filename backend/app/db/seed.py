@@ -33,10 +33,10 @@ def sanitize_name(name: str) -> str:
 
 def run_etl():
     """Executes the full ETL pipeline:
-    1. Extraction: Reads from carriers_raw.csv
-    2. Transformation: Normalizes names and generates synthetic detection IDs.
-    3. Loading: Upserts into 'carriers' and 'truck_detections' tables.
-    4. Optimization: Refreshes the Materialized View for the analytical tier.
+    1. Schema Init: Runs schema.sql to ensure tables exist.
+    2. Extraction: Reads from carriers_raw.csv
+    3. Transformation: Normalizes names and generates synthetic detections.
+    4. Loading: Upserts data and refreshes Materialized View.
     """
     if not DATABASE_URL:
         print("Error: DATABASE_URL not found in environment.")
@@ -47,7 +47,15 @@ def run_etl():
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
 
-        # 1. Extraction Tier
+        # 1. Schema Initialization Tier
+        schema_path = os.path.join(os.path.dirname(__file__), "schema.sql")
+        print(f"Initializing schema from {schema_path}...")
+        with open(schema_path, 'r') as f:
+            schema_sql = f.read()
+            cur.execute(schema_sql)
+        conn.commit()
+
+        # 2. Extraction Tier
         raw_data_path = os.path.join(os.path.dirname(__file__), "carriers_raw.csv")
         carriers_to_insert = {} # usdot -> name
         detections_to_insert = []
