@@ -1,7 +1,7 @@
 # Genlogs Carrier Portal Prototype
 
 [![Docker Ready](https://img.shields.io/badge/Docker-Zero--Config-blue?logo=docker)](https://github.com/carlosbelalcazar/genlogs-carrier-portal-analytics)
-[![Architecture: C4](https://img.shields.io/badge/Architecture-C4--Level--2-emerald)](./ARCHITECTURE_DIAGRAMS.md)
+[![Architecture: C4](https://img.shields.io/badge/Architecture-C4--Level--2-emerald)](./docs/ARCHITECTURE_DIAGRAMS.md)
 [![Staff Level](https://img.shields.io/badge/Design-Staff--Level-gold)](#-architecture-overview)
 
 This repository contains a high-fidelity prototype of the Genlogs truck tracking portal. It demonstrates a full-stack implementation using **FastAPI**, **React**, and **PostgreSQL**, following Staff-level architectural principles such as **Anti-Corruption Layer (ACL)** and **OLAP tier simulation**.
@@ -41,7 +41,7 @@ docker compose up --build
 
 For a complete breakdown of the system, please refer to the following documents:
 
-*   **[System Architecture & Diagrams](./ARCHITECTURE_DIAGRAMS.md):** C4 Model and Database ER Diagrams.
+*   **[System Architecture & Diagrams](./docs/ARCHITECTURE_DIAGRAMS.md):** C4 Model and Database ER Diagrams.
 *   **[API Reference](./docs/API_REFERENCE.md):** Detailed endpoint specifications and logic tiers.
 *   **[Frontend Architecture](./docs/FRONTEND_ARCHITECTURE.md):** State management, validation (Zod), and geographic logic.
 *   **[Development Guide](./docs/DEVELOPMENT_GUIDE.md):** Instructions for extending the ETL pipeline and maintenance.
@@ -51,7 +51,7 @@ For a complete breakdown of the system, please refer to the following documents:
 ## 🏛 Architecture & Design
 
 For a detailed visual mapping of the system, including **C4 Diagrams (Context & Containers)** and **ER Diagrams**, please see:
-👉 **[ARCHITECTURE_DIAGRAMS.md](./ARCHITECTURE_DIAGRAMS.md)**
+👉 **[ARCHITECTURE_DIAGRAMS.md](./docs/ARCHITECTURE_DIAGRAMS.md)**
 
 ### Design Philosophy: Pragmatic Scale
 We have mapped production-grade concepts to this MVP:
