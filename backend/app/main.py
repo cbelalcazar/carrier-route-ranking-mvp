@@ -59,12 +59,24 @@ class SearchResponse(BaseModel):
     carriers: List[CarrierInfo]
     execution_time_ms: float = Field(..., description="API execution time including DB query and sanitization")
 
+from app.db.seed import run_etl
+
 # --- FastAPI App ---
 app = FastAPI(
     title="Genlogs Carrier Portal API", 
     description="Backend service for carrier route ranking and logistics analytics.",
     version="1.3.0"
 )
+
+@app.on_event("startup")
+def startup_event():
+    """Executes automatic seeding on startup to ensure production data integrity."""
+    logger.info("Verifying database state...")
+    try:
+        run_etl()
+        logger.info("Auto-seeding completed successfully.")
+    except Exception as e:
+        logger.error(f"Auto-seeding failed: {e}")
 
 app.add_middleware(
     CORSMiddleware,
