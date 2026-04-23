@@ -1,0 +1,70 @@
+# --- Genlogs Project Global Gitignore ---
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.env
+secrets.json
+*.pem
+*.key
+
+# Docker
+.docker_data/
+postgres_data/
+
+# Python (Backend)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Node.js (Frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+dist-ssr/
+.eslintcache
+.stylelintcache
+.vite/
+.parcel-cache
+
+# Databases & Data
+*.sqlite3
+*.db
+*.csv_tmp
+backend/app/db/*.local.csv
+
+# OS & IDEs
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Project Specific
+docs/superpowers/ # Internal agent docs (optional to keep, but cleaner to ignore if purely for dev)
+.gemini/
+.gemini_security/

@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #2D7DFA;
+  --color-bg-dark: #0B1426;
+  --color-bg-deep: #060b16;
+  --color-accent: #7059C1;
+  --color-text-main: #FFFFFF;
+  --color-text-muted: #A0AEC0;
+}
+
+body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-main);
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #0B1426 !important; /* Match map background to brand */
+}
+
+/* Custom scrollbar for dark theme */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0B1426;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1A2B4B;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #2D7DFA;
+}
+
+/* Hide datalist arrow across browsers */
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
