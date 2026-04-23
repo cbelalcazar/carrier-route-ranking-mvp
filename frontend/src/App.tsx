@@ -26,6 +26,7 @@ function ErrorFallback({ error }: FallbackProps) {
 }
 
 export default function App() {
+  console.log("Genlogs Portal Booting... API URL:", import.meta.env.VITE_API_URL);
   const [localOrigin, setLocalOrigin] = useState('');
   const [localDest, setLocalDest] = useState('');
   
