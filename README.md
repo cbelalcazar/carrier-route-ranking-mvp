@@ -30,6 +30,17 @@ docker compose up --build
 
 ---
 
+## 📚 Documentation & Technical Deep-Dive
+
+For a complete breakdown of the system, please refer to the following documents:
+
+*   **[System Architecture & Diagrams](./ARCHITECTURE_DIAGRAMS.md):** C4 Model and Database ER Diagrams.
+*   **[API Reference](./docs/API_REFERENCE.md):** Detailed endpoint specifications and logic tiers.
+*   **[Frontend Architecture](./docs/FRONTEND_ARCHITECTURE.md):** State management, validation (Zod), and geographic logic.
+*   **[Development Guide](./docs/DEVELOPMENT_GUIDE.md):** Instructions for extending the ETL pipeline and maintenance.
+
+---
+
 ## 🏛 Architecture & Design
 
 For a detailed visual mapping of the system, including **C4 Diagrams (Context & Containers)** and **ER Diagrams**, please see:
