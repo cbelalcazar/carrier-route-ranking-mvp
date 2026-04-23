@@ -61,11 +61,26 @@ class SearchResponse(BaseModel):
 
 from app.db.seed import run_etl
 
+from fastapi import FastAPI, Depends, Query, HTTPException, Request, Header
+
+# --- Security ---
+GENLOGS_API_KEY = os.getenv("GENLOGS_API_KEY")
+
+async def verify_api_key(x_api_key: str = Header(None)):
+    """Verifies the shared secret between frontend and backend."""
+    if not GENLOGS_API_KEY:
+        # If no key is set in ENV, we allow access (for dev convenience)
+        return
+    if x_api_key != GENLOGS_API_KEY:
+        logger.warning(f"Unauthorized access attempt with key: {x_api_key}")
+        raise HTTPException(status_code=403, detail="Unauthorized: Invalid API Key")
+
 # --- FastAPI App ---
 app = FastAPI(
     title="Genlogs Carrier Portal API", 
     description="Backend service for carrier route ranking and logistics analytics.",
-    version="1.3.0"
+    version="1.3.0",
+    dependencies=[Depends(verify_api_key)] if GENLOGS_API_KEY else []
 )
 
 @app.get("/health")

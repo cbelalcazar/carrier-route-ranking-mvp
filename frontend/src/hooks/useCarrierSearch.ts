@@ -5,6 +5,7 @@ import { CITY_DB } from '../constants/cities';
 import { SearchResponseSchema, type SearchResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_KEY = import.meta.env.VITE_API_KEY || '';
 
 export function useCarrierSearch() {
   const [searchParams, setSearchParams] = useState<{ origin: string; dest: string } | null>(null);
@@ -27,7 +28,10 @@ export function useCarrierSearch() {
       const destSearch = CITY_DB[searchParams.dest.toLowerCase().trim()]?.name || searchParams.dest;
 
       const response = await axios.get(`${API_BASE_URL}/api/v1/search`, {
-        params: { origin: originSearch, destination: destSearch }
+        params: { origin: originSearch, destination: destSearch },
+        headers: {
+          'X-API-Key': API_KEY
+        }
       });
       
       // Zero-Trust Validation: Validate API response against schema
