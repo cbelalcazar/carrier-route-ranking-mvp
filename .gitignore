@@ -65,6 +65,7 @@ desktop.ini
 *.swo
 
 # Project Specific
+.worktrees/
 docs/superpowers/ # Internal agent docs (optional to keep, but cleaner to ignore if purely for dev)
 .gemini/
 .gemini_security/
