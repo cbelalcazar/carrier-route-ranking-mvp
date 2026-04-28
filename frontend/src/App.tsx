@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { 
-  Truck, MapPin, BarChart3, 
-  Activity, Globe, Info, Navigation, X
+  Truck, BarChart3, 
+  Activity, Globe, Info
 } from 'lucide-react';
 import RouteMap from './components/RouteMap';
 import { CarrierRanking } from './components/features/CarrierRanking';
 import { useCarrierSearch } from './hooks/useCarrierSearch';
-import { UI_SUGGESTIONS } from './constants/cities';
+import { CityAutocomplete } from './components/ui/CityAutocomplete';
+import type { CityCoords } from './types';
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 function ErrorFallback({ error }: FallbackProps) {
   const message = error instanceof Error ? error.message : String(error);
@@ -27,8 +22,8 @@ function ErrorFallback({ error }: FallbackProps) {
 
 export default function App() {
   console.log("Genlogs Portal Booting... API URL:", import.meta.env.VITE_API_URL);
-  const [localOrigin, setLocalOrigin] = useState('');
-  const [localDest, setLocalDest] = useState('');
+  const [localOrigin, setLocalOrigin] = useState<CityCoords | null>(null);
+  const [localDest, setLocalDest] = useState<CityCoords | null>(null);
   
   const {
     originData,
@@ -41,7 +36,9 @@ export default function App() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    search(localOrigin, localDest);
+    if (localOrigin && localDest) {
+      search(localOrigin, localDest);
+    }
   };
 
   return (
@@ -60,63 +57,21 @@ export default function App() {
 
         <form onSubmit={handleSearch} className="flex items-center gap-3 bg-white/5 p-2 rounded-2xl border border-white/15 shadow-inner" aria-label="Search routes">
           
-          {/* ORIGIN INPUT WITH CLEAR BUTTON */}
-          <div className={cn(
-            "relative transition-all duration-300 rounded-xl group flex items-center",
-            originData ? "bg-emerald-500/10" : "hover:bg-white/5"
-          )}>
-            <label htmlFor="origin" className="sr-only">Origin City</label>
-            <MapPin className={cn("absolute left-3 w-4 h-4 transition-colors duration-300", originData ? 'text-emerald-400' : 'text-[#A0AEC0]')} aria-hidden="true" />
-            <input 
-              id="origin"
-              list="city-list"
-              type="text" 
-              placeholder="Origin node..." 
-              autoComplete="off"
-              className="pl-10 pr-10 py-2.5 bg-transparent text-sm font-bold text-white outline-none w-52 border-r border-white/10 placeholder:text-white/30 focus:text-[#2D7DFA]"
-              value={localOrigin}
-              onChange={(e) => setLocalOrigin(e.target.value)}
-            />
-            {localOrigin && (
-              <button 
-                type="button"
-                onClick={() => setLocalOrigin('')}
-                className="absolute right-3 p-1 hover:bg-white/10 rounded-full transition-colors group/btn"
-                aria-label="Clear origin"
-              >
-                <X className="w-3 h-3 text-[#A0AEC0] group-hover/btn:text-white" />
-              </button>
-            )}
-          </div>
+          <CityAutocomplete 
+            id="origin"
+            placeholder="Origin node..."
+            type="origin"
+            value={localOrigin}
+            onChange={setLocalOrigin}
+          />
           
-          {/* DESTINATION INPUT WITH CLEAR BUTTON */}
-          <div className={cn(
-            "relative transition-all duration-300 rounded-xl group flex items-center",
-            destData ? "bg-emerald-500/10" : "hover:bg-white/5"
-          )}>
-            <label htmlFor="destination" className="sr-only">Destination City</label>
-            <Navigation className={cn("absolute left-3 w-4 h-4 transition-colors duration-300", destData ? 'text-emerald-400' : 'text-[#A0AEC0]')} aria-hidden="true" />
-            <input 
-              id="destination"
-              list="city-list"
-              type="text" 
-              placeholder="Destination node..." 
-              autoComplete="off"
-              className="pl-10 pr-10 py-2.5 bg-transparent text-sm font-bold text-white outline-none w-52 placeholder:text-white/30 focus:text-[#2D7DFA]"
-              value={localDest}
-              onChange={(e) => setLocalDest(e.target.value)}
-            />
-            {localDest && (
-              <button 
-                type="button"
-                onClick={() => setLocalDest('')}
-                className="absolute right-2 p-1 hover:bg-white/10 rounded-full transition-colors group/btn"
-                aria-label="Clear destination"
-              >
-                <X className="w-3 h-3 text-[#A0AEC0] group-hover/btn:text-white" />
-              </button>
-            )}
-          </div>
+          <CityAutocomplete 
+            id="destination"
+            placeholder="Destination node..."
+            type="destination"
+            value={localDest}
+            onChange={setLocalDest}
+          />
 
           <button 
             type="submit" 
@@ -126,10 +81,6 @@ export default function App() {
             {loading ? '...' : 'SEARCH'}
           </button>
         </form>
-
-        <datalist id="city-list">
-          {UI_SUGGESTIONS.map(c => <option key={c} value={c} />)}
-        </datalist>
 
         <div className="hidden lg:flex items-center gap-5">
            <div className="flex flex-col items-end">

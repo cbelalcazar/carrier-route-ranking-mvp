@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { fetchCitySuggestions } from '../../api/geocoding';
-import { CityCoords } from '../../types';
+import type { CityCoords } from '../../types';
 import { MapPin, Navigation, X, Loader2 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';

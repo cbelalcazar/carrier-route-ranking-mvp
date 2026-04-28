@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CityCoords } from '../types';
+import type { CityCoords } from '../types';
 
 interface NominatimResult {
   place_id: number;
