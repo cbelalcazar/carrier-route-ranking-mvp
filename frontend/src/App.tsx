@@ -44,7 +44,7 @@ export default function App() {
   return (
     <div className="h-screen bg-[#0B1426] text-white font-sans flex flex-col overflow-hidden selection:bg-[#2D7DFA]/30">
       
-      <header role="banner" className="bg-black/60 backdrop-blur-2xl border-b border-white/10 px-8 py-5 flex items-center justify-between shrink-0 z-50 shadow-2xl">
+      <header role="banner" className="bg-black/60 backdrop-blur-2xl border-b border-white/10 px-8 py-5 flex items-center justify-between shrink-0 z-[2000] shadow-2xl">
         <div className="flex items-center gap-4">
           <div className="bg-[#2D7DFA] p-2.5 rounded-2xl shadow-[0_0_25px_rgba(45,125,250,0.5)]" aria-hidden="true">
             <Truck className="text-white w-6 h-6" />

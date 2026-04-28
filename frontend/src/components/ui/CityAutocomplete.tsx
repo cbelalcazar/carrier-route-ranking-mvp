@@ -112,7 +112,7 @@ export function CityAutocomplete({ id, placeholder, type, value, onChange }: Cit
       )}
 
       {isOpen && suggestions.length > 0 && (
-        <ul className="absolute top-full left-0 mt-2 w-full bg-[#0B1426] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+        <ul className="absolute top-full left-0 mt-2 w-full bg-[#0B1426] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-[2000]">
           {suggestions.map((city, idx) => (
             <li 
               key={idx}
