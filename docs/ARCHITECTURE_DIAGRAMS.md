@@ -101,20 +101,44 @@ graph TB
 
 ## 3. Database ER Diagram
 
-The database is optimized using an **Analytical Tier** within PostgreSQL via **Materialized Views**.
+The database is optimized using an **Analytical Tier** within PostgreSQL via **Materialized Views**. The full platform also tracks the source and processing tiers.
 
 ```mermaid
 erDiagram
-    CARRIERS ||--o{ TRUCK_DETECTIONS : operates
+    CAMERAS ||--o{ DETECTIONS_RAW : captures
+    DETECTIONS_RAW ||--o{ OCR_RESULTS : generates
+    OCR_RESULTS ||--|| TRUCK_IDENTIFICATIONS : identifies
+    TRUCK_IDENTIFICATIONS }o--|| CARRIERS : matches
+    TRUCK_IDENTIFICATIONS ||--|| TRUCK_DETECTIONS : populates
+    
+    CAMERAS {
+        int id PK
+        string serial_number
+        float lat
+        float lng
+        string status
+    }
+    DETECTIONS_RAW {
+        int id PK
+        int camera_id FK
+        string s3_path
+        timestamp captured_at
+    }
+    OCR_RESULTS {
+        int id PK
+        int detection_id FK
+        string detected_text
+        string logo_label
+        float confidence
+        jsonb bounding_box
+    }
     CARRIERS {
         int id PK
         int usdot_number UK
         string name
-        timestamp created_at
     }
     TRUCK_DETECTIONS {
         int id PK
-        string truck_id
         int carrier_id FK
         string origin_city
         string dest_city
